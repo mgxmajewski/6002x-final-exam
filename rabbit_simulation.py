@@ -87,5 +87,15 @@ def runSimulation(numSteps):
         fox_population.append(CURRENTFOXPOP)
     return rabbit_population, fox_population
 
+# print(runSimulation(200))
 
-print(runSimulation(200))
+rabbitPopulationOverTime = runSimulation(200)[0]
+# foxPopulationOverTime = runSimulation(200)[1]
+
+coeff1 = pylab.polyfit(range(len(rabbitPopulationOverTime)), rabbitPopulationOverTime, 2)
+pylab.plot(pylab.polyval(coeff1, range(len(rabbitPopulationOverTime))))
+pylab.show()
+
+# coeff2 = pylab.polyfit(range(len(foxPopulationOverTime)), foxPopulationOverTime, 2)
+# pylab.plot(pylab.polyval(coeff2, range(len(foxPopulationOverTime))))
+# pylab.show()
