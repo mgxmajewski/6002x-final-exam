@@ -22,8 +22,11 @@ def rabbitGrowth():
     # you need this line for modifying global variables
     global CURRENTRABBITPOP
 
-    # TO DO
-    pass
+    probability_of_reproduction = 1 - CURRENTRABBITPOP/MAXRABBITPOP
+    for rabbit in range(CURRENTRABBITPOP):
+        if random.random() <= probability_of_reproduction and CURRENTRABBITPOP < MAXRABBITPOP:
+            CURRENTRABBITPOP += 1
+
 
 
 def foxGrowth():
@@ -46,8 +49,20 @@ def foxGrowth():
     global CURRENTRABBITPOP
     global CURRENTFOXPOP
 
-    # TO DO
-    pass
+    probability_fox_eats_rabbit = CURRENTRABBITPOP/MAXRABBITPOP
+    probability_fox_born = 1/3
+    probability_fox_die = 0.1
+    for fox in range(CURRENTFOXPOP):
+        if random.random() <= probability_fox_eats_rabbit and CURRENTRABBITPOP > 10:
+            CURRENTRABBITPOP -= 1
+            if random.random() <= probability_fox_born:
+                CURRENTFOXPOP += 1
+            elif random.random() <= probability_fox_die and CURRENTFOXPOP > 10:
+                CURRENTFOXPOP -= 1
+
+
+
+
 
 
 def runSimulation(numSteps):
@@ -63,4 +78,14 @@ def runSimulation(numSteps):
     """
 
     # TO DO
-    pass
+    rabbit_population = []
+    fox_population = []
+    for step in range(numSteps):
+        rabbitGrowth()
+        foxGrowth()
+        rabbit_population.append(CURRENTRABBITPOP)
+        fox_population.append(CURRENTFOXPOP)
+    return rabbit_population, fox_population
+
+
+print(runSimulation(200))
