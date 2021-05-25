@@ -36,6 +36,7 @@ def get_mean_and_std(X):
     return mean, std
 
 
+
 def lecture_activities(N, aLecture):
     '''
     N: integer, number of trials to run
@@ -49,6 +50,28 @@ def lecture_activities(N, aLecture):
              interval around that mean.
     '''
     # IMPLEMENT THIS FUNCTION
+    fb_probability = aLecture.get_fb_prob()
+    sleep_probability = aLecture.get_sleep_prob()
+    listen_probability = aLecture.get_listen_prob()
+    all_events_happens_counter = []
+    event_counter = 0
+    for trials in range(N):
+        if random.random() <= fb_probability and random.random() <= sleep_probability and random.random() <= listen_probability:
+            event_counter += 1
+            all_events_happens_counter.append(event_counter)
+            event_counter = 0
+        else:
+            event_counter += 1
+
+    sample_mean = get_mean_and_std(all_events_happens_counter)[0]
+    std = get_mean_and_std(all_events_happens_counter)[1]
+    sample_size = len(all_events_happens_counter)
+    print(sample_size)
+    se = std/sample_size**0.5
+    ci = 2*std*1.96
+
+    return sample_mean, ci
+
 
 
 # sample test cases
